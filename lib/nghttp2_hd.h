@@ -166,6 +166,7 @@ struct nghttp2_hd_inflater {
   /* nonzero if deflater requires that current entry must not be
      indexed */
   uint8_t no_index;
+  uint8_t statictbl;
 };
 
 /*
