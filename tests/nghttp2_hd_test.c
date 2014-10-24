@@ -206,7 +206,7 @@ void test_nghttp2_hd_inflate_indexed(void)
   nva_out_init(&out);
   nghttp2_hd_inflate_init(&inflater);
 
-  nghttp2_bufs_addb(&bufs, (1 << 7) | (1 << 6) | 4);
+  nghttp2_bufs_addb(&bufs, (1 << 7) | 4);
 
   blocklen = nghttp2_bufs_len(&bufs);
 

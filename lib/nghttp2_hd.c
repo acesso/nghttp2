@@ -613,7 +613,7 @@ static int emit_indexed_block(nghttp2_bufs *bufs, size_t idx)
 
   bufp = sb;
   *bufp = 0x80u;
-  if(idx < STATIC_TABLE_LENGTH) {
+  if(idx >= STATIC_TABLE_LENGTH) {
     *bufp |= 0x40u;
   }
   encode_length(bufp, ridx + 1, 6);
@@ -728,7 +728,7 @@ static int emit_indname_block(nghttp2_bufs *bufs, size_t idx,
 
   *bufp = pack_first_byte(inc_indexing, no_index);
 
-  if(idx < STATIC_TABLE_LENGTH) {
+  if(idx >= STATIC_TABLE_LENGTH) {
     if(prefixlen == 5) {
       *bufp |= 0x20u;
     } else {
@@ -1602,7 +1602,7 @@ ssize_t nghttp2_hd_inflate_hd(nghttp2_hd_inflater *inflater,
         DEBUGF(fprintf(stderr, "inflatehd: indexed repr\n"));
         inflater->opcode = NGHTTP2_HD_OPCODE_INDEXED;
         inflater->state = NGHTTP2_HD_STATE_READ_INDEX;
-        inflater->statictbl = *in & 0x40u;
+        inflater->statictbl = (*in & 0x40u) == 0;
       } else {
         if(*in == 0x40u || *in == 0 || *in == 0x10u) {
           DEBUGF(fprintf(stderr,
@@ -1616,10 +1616,10 @@ ssize_t nghttp2_hd_inflate_hd(nghttp2_hd_inflater *inflater,
           inflater->state = NGHTTP2_HD_STATE_READ_INDEX;
 
           if(*in & 0x40) {
-            if(*in & 0x20u) {
+            if((*in & 0x20u) == 0) {
               inflater->statictbl = 1;
             }
-          } else if(*in & 0x08u) {
+          } else if((*in & 0x08u) == 0) {
             inflater->statictbl = 1;
           }
         }
