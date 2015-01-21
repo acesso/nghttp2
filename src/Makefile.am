@@ -148,9 +148,9 @@ nghttpx_unittest_SOURCES = shrpx-unittest.cc \
 	memchunk_test.cc memchunk_test.h
 nghttpx_unittest_CPPFLAGS = ${AM_CPPFLAGS}\
 	 -DNGHTTP2_TESTS_DIR=\"$(top_srcdir)/tests\"
-nghttpx_unittest_LDFLAGS = ${AM_LDFLAGS} \
+nghttpx_unittest_LDFLAGS =
+nghttpx_unittest_LDADD = libnghttpx.a ${LDADD} ${AM_LDFLAGS} \
 	@CUNIT_LIBS@ @TESTLDFLAGS@
-nghttpx_unittest_LDADD = libnghttpx.a ${LDADD}
 
 TESTS += nghttpx-unittest
 endif # HAVE_CUNIT

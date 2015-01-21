@@ -1,8 +1,7 @@
 language: cpp
 compiler:
   - clang
-#Disable gcc build for the moment...
-#  - gcc
+  - gcc
 before_install:
   - $CC --version
   - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
